@@ -7,14 +7,23 @@ public class StrongPasswordChecker {
 	}
 
 	private static PasswordType checkType(String password) {
-		boolean hasUppercaseChar = !password.equals(password.toLowerCase());
-		boolean hasLowercaseChar = !password.equals(password.toUpperCase());
-		boolean hasDigit = password.matches(".*\\d.*");
-		if(!(password.length() >= 6 && password.length() <= 20)) {
-			return PasswordType.LENGTH;
+		if(password.length() < 6) {
+			return PasswordType.SMALL_PASS;
 		}
-		if(!(hasUppercaseChar && hasLowercaseChar && hasDigit)) {
-			return PasswordType.INVALID;
+		if(password.length() > 20) {
+			return PasswordType.BIG_PASS;
+		}
+		boolean hasUppercaseChar = !password.equals(password.toLowerCase());
+		if(!hasUppercaseChar) {
+			return PasswordType.UPPERCASE;
+		}
+		boolean hasLowercaseChar = !password.equals(password.toUpperCase());
+		if(!hasLowercaseChar) {
+			return PasswordType.LOWERCASE;
+		}
+		boolean hasDigit = password.matches(".*\\d.*");
+		if(!hasDigit) {
+			return PasswordType.DIGIT;
 		}
 
 		for(int i = 0; i < password.length() - 2; i++) {
