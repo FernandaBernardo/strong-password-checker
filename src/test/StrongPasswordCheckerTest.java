@@ -24,4 +24,10 @@ public class StrongPasswordCheckerTest {
 		assertEquals(PasswordType.INVALID.getMessage(), StrongPasswordChecker.check("password2"));
 		assertEquals(PasswordType.STRONG.getMessage(), StrongPasswordChecker.check("pasSword2"));
 	}
+
+	@Test
+	public void shouldNotRepeatCharacterMoreThanThreeTimes() {
+		assertEquals(PasswordType.REPEATED_CHARACTERS.getMessage(), StrongPasswordChecker.check("1Abababcaaaababababa"));
+		assertEquals(PasswordType.STRONG.getMessage(), StrongPasswordChecker.check("1Ababbabcaababababa"));
+	}
 }
